@@ -11,7 +11,7 @@ namespace Livre
     internal class ConnexionMySql
     {
 
-        static string connectionString = "Server=localhost;database=Livres;uid=Livre;pwd=Livre;";
+        static string connectionString = "Server=localhost;database=livres;uid=livres;pwd=livres;";
 
         public List<Livre> GetAllLivres()
         {
@@ -21,7 +21,7 @@ namespace Livre
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("select ISBN, Titre, Description FROM livres", connection))
+                using (MySqlCommand command = new("select ISBN, Titre, Description FROM Book", connection))
                 {
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -29,7 +29,7 @@ namespace Livre
                         {
                             Livre newlivre = new Livre()
                             {
-                                Id = (string)reader["ISBN"],
+                                Id = Convert.ToInt32(reader["ISBN"]),
                                 Titre = (string)reader["Titre"],
                                 Description = (string)reader["Description"],
 
@@ -53,7 +53,7 @@ namespace Livre
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("INSERT INTO livres (Titre, Description, ID_Categorie) VALUES (@Titre, @Description, @ID_Categorie)", connection))
+                using (MySqlCommand command = new("INSERT INTO book (Titre, Description, ID_Categorie) VALUES (@Titre, @Description, @ID_Categorie)", connection))
                 {
                     command.Parameters.AddWithValue("@Titre", livre.Titre);
                     command.Parameters.AddWithValue("@Description", livre.Description);
@@ -91,6 +91,7 @@ namespace Livre
             }
         }
 
+      
 
 
 
@@ -155,7 +156,7 @@ namespace Livre
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("delete from Livre where ISBN = @ISBN", connection))
+                using (MySqlCommand command = new("delete from book where ISBN = @ISBN", connection))
                 {
                     command.Parameters.AddWithValue("ISBN", ISBN);
                     command.ExecuteNonQuery();

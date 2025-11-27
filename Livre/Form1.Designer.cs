@@ -51,6 +51,7 @@
             lblLivre.Name = "lblLivre";
             lblLivre.Size = new Size(386, 424);
             lblLivre.TabIndex = 0;
+            lblLivre.SelectedIndexChanged += lblLivre_SelectedIndexChanged;
             // 
             // btnAjouter
             // 

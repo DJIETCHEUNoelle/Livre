@@ -13,11 +13,14 @@ namespace Livre
         {
             string nom = txtNomLivre.Text;
             string description = txtDescription.Text;
+            int categorie = (int)cbCategorie.SelectedValue;
 
-            Livre livreAjoute = new Livre(nom, description);
+
+            Livre livreAjoute = new Livre(nom, categorie, description
+                );
 
             connection.AddLivres(livreAjoute);
-            
+
 
         }
 
@@ -31,10 +34,18 @@ namespace Livre
             cbCategorie.Items.Clear();
             List<Categorie> categories = connection.GetAllCategorie();
 
-            foreach (Categorie categorie in categories)
-            {
-                cbCategorie.Items.Add(categorie);
-            }
+            cbCategorie.DataSource = categories;
+            cbCategorie.DisplayMember = "Nom_Categorie";
+            cbCategorie.ValueMember = "Id";
+        }
+
+        public void RefreshLivre()
+        {
+            lblLivre.Items.Clear(); 
+            List<Livre> livres = connection.GetAllLivres();
+
+            lblLivre.DataSource = livres;
+            
         }
 
         private void cbCategorie_SelectedIndexChanged(object sender, EventArgs e)
@@ -44,10 +55,16 @@ namespace Livre
 
         private void Form1_Load(object sender, EventArgs e)
 
-        {   
-            
+        {
+
             RefreshCategory();
-            
+            RefreshLivre();
+
+        }
+
+        private void lblLivre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

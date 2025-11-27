@@ -22,7 +22,7 @@ CREATE TABLE author(
 );
 
 CREATE TABLE Book(
-   ISBN VARCHAR(50) ,
+   ISBN VARCHAR(50) AUTO_INCREMENT ,
    Titre VARCHAR(50)  NOT NULL,
    Description VARCHAR(50)  NOT NULL,
    Id_Categorie INT NOT NULL,
@@ -38,9 +38,11 @@ CREATE TABLE Author_Wrote(
    FOREIGN KEY(Id_Auteur) REFERENCES author(Id_Auteur)
 );
 
-INSERT INTO CATEGORIE (Id_categorie, Nom_categorie)
+INSERT INTO Category (Id_categorie, Nom_categorie)
 VALUES 
     (1, 'Roman noir / Polar'),
     (2, 'Biographie'),
     (3, 'Recueil de voyage');
 
+create user 'livres'@'localhost' identified by 'livres';
+grant select, update, insert, delete on Contactes.* to 'livres'@'localhost';

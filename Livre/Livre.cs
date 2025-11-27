@@ -27,9 +27,14 @@ namespace Livre
             Description = description;
         }
 
-        public string Id { get; set; }  
+        public int Id { get; set; }  
         public string Titre { get; set; }
         public int IdCategorie { get; set; }
         public string Description { get; set; }
+
+        public override string? ToString()
+        {
+            return Titre.ToString();
+        }
     }
 }
