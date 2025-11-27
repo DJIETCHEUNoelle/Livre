@@ -37,3 +37,10 @@ CREATE TABLE Author_Wrote(
    FOREIGN KEY(ISBN) REFERENCES Book(ISBN),
    FOREIGN KEY(Id_Auteur) REFERENCES author(Id_Auteur)
 );
+
+INSERT INTO CATEGORIE (Id_categorie, Nom_categorie)
+VALUES 
+    (1, 'Roman noir / Polar'),
+    (2, 'Biographie'),
+    (3, 'Recueil de voyage');
+

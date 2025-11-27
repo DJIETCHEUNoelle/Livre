@@ -47,28 +47,51 @@ namespace Livre
         }
 
 
-        public void  AddLivres(Livre livre)
+        public void AddLivres(Livre livre)
         {
-           
-
             using (MySqlConnection connection = new(connectionString))
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("INSERT INTO livres (TITRE, Description) VALUES (@Titre , @Description)", connection))
+                using (MySqlCommand command = new("INSERT INTO livres (Titre, Description, ID_Categorie) VALUES (@Titre, @Description, @ID_Categorie)", connection))
                 {
-                    
                     command.Parameters.AddWithValue("@Titre", livre.Titre);
                     command.Parameters.AddWithValue("@Description", livre.Description);
+                    command.Parameters.AddWithValue("@ID_Categorie", livre.IdCategorie);
 
                     command.ExecuteNonQuery();
                 }
 
                 connection.Close();
             }
-
-           
         }
+        public void UpdateLivres(Livre livre)
+        {
+            using (MySqlConnection connection = new(connectionString))
+            {
+                connection.Open();
+
+                string query = @"UPDATE livres 
+                         SET Titre = @Titre, 
+                             Description = @Description,
+                             ID_Categorie = @ID_Categorie
+                         WHERE ID_Livre = @ID_Livre";
+
+                using (MySqlCommand command = new(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Titre", livre.Titre);
+                    command.Parameters.AddWithValue("@Description", livre.Description);
+                    command.Parameters.AddWithValue("@ID_Categorie", livre.IdCategorie);
+                    command.Parameters.AddWithValue("@ID_Livre", livre.Id);
+
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+
 
 
         public List<Categorie> GetAllCategorie()
