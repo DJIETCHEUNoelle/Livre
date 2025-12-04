@@ -38,7 +38,7 @@
             lblPrenom = new Label();
             label3 = new Label();
             txtNomAuteur = new TextBox();
-            txtNomLivre = new TextBox();
+            txtPrenomAuteur = new TextBox();
             label4 = new Label();
             label1 = new Label();
             cbCategorie = new ComboBox();
@@ -46,6 +46,9 @@
             txbIsbn = new TextBox();
             btnSupprimer = new Button();
             btnModifier = new Button();
+            btnAuteur = new Button();
+            button1 = new Button();
+            cbAuteur = new ComboBox();
             SuspendLayout();
             // 
             // lblLivre
@@ -140,13 +143,13 @@
             txtNomAuteur.Size = new Size(110, 23);
             txtNomAuteur.TabIndex = 3;
             // 
-            // txtNomLivre
+            // txtPrenomAuteur
             // 
-            txtNomLivre.Location = new Point(194, 422);
-            txtNomLivre.Margin = new Padding(3, 2, 3, 2);
-            txtNomLivre.Name = "txtNomLivre";
-            txtNomLivre.Size = new Size(110, 23);
-            txtNomLivre.TabIndex = 2;
+            txtPrenomAuteur.Location = new Point(194, 422);
+            txtPrenomAuteur.Margin = new Padding(3, 2, 3, 2);
+            txtPrenomAuteur.Name = "txtPrenomAuteur";
+            txtPrenomAuteur.Size = new Size(110, 23);
+            txtPrenomAuteur.TabIndex = 2;
             // 
             // label4
             // 
@@ -214,11 +217,42 @@
             btnModifier.UseVisualStyleBackColor = true;
             btnModifier.Click += btnModifier_Click;
             // 
+            // btnAuteur
+            // 
+            btnAuteur.Location = new Point(175, 487);
+            btnAuteur.Name = "btnAuteur";
+            btnAuteur.Size = new Size(129, 23);
+            btnAuteur.TabIndex = 10;
+            btnAuteur.Text = "Ajouter Auteur";
+            btnAuteur.UseVisualStyleBackColor = true;
+            btnAuteur.Click += btnAuteur_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(542, 498);
+            button1.Name = "button1";
+            button1.Size = new Size(192, 23);
+            button1.TabIndex = 11;
+            button1.Text = "Associer Auteur a un livre";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_2;
+            // 
+            // cbAuteur
+            // 
+            cbAuteur.FormattingEnabled = true;
+            cbAuteur.Location = new Point(542, 414);
+            cbAuteur.Name = "cbAuteur";
+            cbAuteur.Size = new Size(121, 23);
+            cbAuteur.TabIndex = 12;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1148, 550);
+            Controls.Add(cbAuteur);
+            Controls.Add(button1);
+            Controls.Add(btnAuteur);
             Controls.Add(btnModifier);
             Controls.Add(btnSupprimer);
             Controls.Add(Isbn);
@@ -230,7 +264,7 @@
             Controls.Add(label3);
             Controls.Add(lblPrenom);
             Controls.Add(lblNomAuteur);
-            Controls.Add(txtNomLivre);
+            Controls.Add(txtPrenomAuteur);
             Controls.Add(labelTitre);
             Controls.Add(txtNomAuteur);
             Controls.Add(txtDescription);
@@ -257,7 +291,7 @@
         private Label lblPrenom;
         private Label label3;
         private TextBox txtNomAuteur;
-        private TextBox txtNomLivre;
+        private TextBox txtPrenomAuteur;
         private Label label4;
         private Label label1;
         private ComboBox cbCategorie;
@@ -265,5 +299,8 @@
         private TextBox txbIsbn;
         private Button btnSupprimer;
         private Button btnModifier;
+        private Button btnAuteur;
+        private Button button1;
+        private ComboBox cbAuteur;
     }
 }

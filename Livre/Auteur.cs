@@ -8,7 +8,13 @@ namespace Livre
 {
     public class Auteur
     {
-        public string nom {  get; set; }
-        public string prenom { get; set; }
+        public int Id { get; set; }
+        public string Nom {  get; set; }
+        public string Prenom { get; set; }
+
+        public override string? ToString()
+        {
+            return Nom + " "+Prenom.ToString();
+        }
     }
 }

@@ -9,11 +9,7 @@ namespace Livre
 {
     public class Livre
     {
-        public Livre()
-        {
-        }
-
-
+     public Livre() { }
         public Livre(string titre, string isbn ,int idCategorie, string description)
         {
             Titre = titre;

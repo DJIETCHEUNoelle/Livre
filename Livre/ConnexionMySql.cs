@@ -178,6 +178,72 @@ namespace Livre
             return canBeDeleted;
         }
 
+        public void AddAuteur(string nom, string prenom)
+        {
+            using (MySqlConnection connection = new(connectionString))
+            {
+                connection.Open();
+
+                string query = @"INSERT INTO Author (Nom, Prenom)
+                         VALUES (@Nom, @Prenom)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Nom", nom);
+                    command.Parameters.AddWithValue("@Prenom", prenom);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<Auteur> GetAllAuteurs()
+        {
+            List<Auteur> auteurs = new List<Auteur>();
+
+            using (MySqlConnection connection = new(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT Id_Auteur, Nom, Prenom FROM Author";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            auteurs.Add(new Auteur
+                            {
+                                Id = reader.GetInt32("Id_Auteur"),
+                                Nom = reader.GetString("Nom"),
+                                Prenom = reader.GetString("Prenom")
+                            });
+                        }
+                    }
+                }
+            }
+
+            return auteurs;
+        }
+        public void AddAuteurToLivre(int idLivre, int idAuteur)
+        {
+            using (MySqlConnection connection = new(connectionString))
+            {
+                connection.Open();
+
+                string query = @"INSERT INTO Author_Wrote (Id_Book, Id_Auteur)
+                         VALUES (@Id_Book, @Id_Auteur)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id_Book", idLivre);
+                    command.Parameters.AddWithValue("@Id_Auteur", idAuteur);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+
         public void DeleteLivre(int Id_Book)
         {
             using (MySqlConnection connection = new(connectionString))
