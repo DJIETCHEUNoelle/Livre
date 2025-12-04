@@ -11,7 +11,8 @@ namespace Livre
     internal class ConnexionMySql
     {
 
-        static string connectionString = "Server=localhost;database=livres;uid=livres;pwd=livres;";
+        static string connectionString = "Server=localhost;Database=livres;Uid=livres;Pwd=livres;";
+
 
         public List<Livre> GetAllLivres()
         {
@@ -21,7 +22,8 @@ namespace Livre
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("select ISBN, Titre, Description FROM Book", connection))
+                using (MySqlCommand command = new("SELECT Id_Book, ISBN, Titre, Description, Id_Categorie FROM Book", connection))
+
                 {
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -29,10 +31,9 @@ namespace Livre
                         {
                             Livre newlivre = new Livre()
                             {
-                                Id = Convert.ToInt32(reader["ISBN"]),
-                                Titre = (string)reader["Titre"],
-                                Description = (string)reader["Description"],
-
+                                Id = reader.GetInt32(reader.GetOrdinal("Id_Book")),
+                                Titre = reader.GetString(reader.GetOrdinal("Titre")),
+                                Description = reader.GetString(reader.GetOrdinal("Description")),
                             };
 
                             livres.Add(newlivre);
@@ -45,6 +46,31 @@ namespace Livre
 
             return livres;
         }
+        public void UpdateLivre(Livre livre)
+        {
+            using (MySqlConnection connection = new(connectionString))
+            {
+                connection.Open();
+
+                string query = @"UPDATE Book 
+                         SET Titre = @Titre, 
+                             ISBN = @ISBN,
+                             Description = @Description,
+                             Id_Categorie = @IdCategorie
+                         WHERE Id_Book = @Id";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Titre", livre.Titre);
+                    command.Parameters.AddWithValue("@ISBN", livre.Isbn);
+                    command.Parameters.AddWithValue("@Description", livre.Description);
+                    command.Parameters.AddWithValue("@IdCategorie", livre.IdCategorie);
+                    command.Parameters.AddWithValue("@Id", livre.Id);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
 
 
         public void AddLivres(Livre livre)
@@ -53,16 +79,18 @@ namespace Livre
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("INSERT INTO book (Titre, Description, ID_Categorie) VALUES (@Titre, @Description, @ID_Categorie)", connection))
+                string query = @"INSERT INTO Book (Titre, ISBN, Description, Id_Categorie)
+                         VALUES (@Titre, @ISBN, @Description, @IdCategorie)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Titre", livre.Titre);
-                    command.Parameters.AddWithValue("@Description", livre.Description);
-                    command.Parameters.AddWithValue("@ID_Categorie", livre.IdCategorie);
+                    cmd.Parameters.AddWithValue("@Titre", livre.Titre);
+                    cmd.Parameters.AddWithValue("@ISBN", livre.Isbn);
+                    cmd.Parameters.AddWithValue("@Description", livre.Description);
+                    cmd.Parameters.AddWithValue("@IdCategorie", livre.IdCategorie);
 
-                    command.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
                 }
-
-                connection.Close();
             }
         }
         public void UpdateLivres(Livre livre)
@@ -150,15 +178,15 @@ namespace Livre
             return canBeDeleted;
         }
 
-        public void DeleteLivre(int ISBN)
+        public void DeleteLivre(int Id_Book)
         {
             using (MySqlConnection connection = new(connectionString))
             {
                 connection.Open();
 
-                using (MySqlCommand command = new("delete from book where ISBN = @ISBN", connection))
+                using (MySqlCommand command = new("delete from book where Id_Book = @Id_Book", connection))
                 {
-                    command.Parameters.AddWithValue("ISBN", ISBN);
+                    command.Parameters.AddWithValue("Id_Book", Id_Book);
                     command.ExecuteNonQuery();
                 }
 

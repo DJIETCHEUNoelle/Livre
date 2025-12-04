@@ -13,28 +13,25 @@ namespace Livre
         {
         }
 
-        public Livre( string titre, string description)
-        {
-            
-            Titre = titre;
-            Description = description;
-        }
 
-        public Livre(string titre, int idCategorie, string description)
+        public Livre(string titre, string isbn ,int idCategorie, string description)
         {
             Titre = titre;
+            Isbn = isbn;
             IdCategorie = idCategorie;
             Description = description;
         }
 
         public int Id { get; set; }  
         public string Titre { get; set; }
+
+        public string Isbn { get; set; }    
         public int IdCategorie { get; set; }
         public string Description { get; set; }
 
         public override string? ToString()
         {
-            return Titre.ToString();
+            return Titre + "" + Description.ToString();
         }
     }
 }
